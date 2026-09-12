@@ -1,0 +1,6 @@
+{
+  "name": "ប្រព័ន្ធគ្រប់គ្រងទំនិញ ទិញ-លក់ និងរបាយការណ៍",
+  "description": "កម្មវិធីគ្រប់គ្រងទំនិញ ការទិញចូល ការលក់ចេញ គណនាប្រាក់ចំណេញជាដុល្លារ និងរៀល ព្រមទាំងទាញយក និងរក្សាទុកទិន្នន័យជាមួយ Google Sheets",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
