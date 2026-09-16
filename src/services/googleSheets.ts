@@ -539,7 +539,7 @@ export const fetchStoreDataFromGoogleSheet = async (
     const colCostKHR = findCol(headers, /^buypricer$|^buyprice.*r$|^buyprice.*khr$|buy.*khr|តម្លៃទិញ.*៛|ទិញ.*៛|ទិញ.*រៀល|ថ្លៃដើម.*៛|cost.*khr|cost.*រៀល/i, 6);
     const colSaleR = findCol(headers, /^sellpricer$|^sellprice.*r$|^sellprice.*khr$|^sellprice$|sell.*khr|តម្លៃលក់.*៛|លក់.*៛|តម្លៃលក់|price.*khr|sale.*រៀល|sale.*khr|sale.*price/i, 7);
     const colStock = findCol(headers, /^stock$|^qty$|^quantity$|ចំនួន.*ស្តុក|^ចំនួន|^ស្តុក$|balance/i, 8);
-    const colImage = findCol(headers, /^image$|^photo$|^pic$|^img$|រូបភាព|រូប/i, 9);
+    const colImage = 9; // Strictly use J:J (index 9) as requested
     const colMinStock = findCol(headers, /អាសន្ន|alert|min/i, 10);
     const colNotes = findCol(headers, /សម្គាល់|note|remark/i, 11);
     const colCreated = findCol(headers, /កាលបរិច្ឆេទ|date|created/i, 12);
@@ -642,18 +642,11 @@ export const fetchStoreDataFromGoogleSheet = async (
         stockVal = cleanNumber(row[8]);
       }
 
-      // 10. Image from Col J:J (index 9) or colImage
+      // 10. Image STRICTLY from Col J:J (index 9) as requested
       let imageUrl: string | undefined = undefined;
-      const rawImg = (colImage !== -1 && row[colImage] !== undefined && row[colImage] !== null && String(row[colImage]).trim() !== '')
-        ? String(row[colImage]).trim()
-        : (row[9] !== undefined && row[9] !== null ? String(row[9]).trim() : '');
-
+      const rawImg = row[9] !== undefined && row[9] !== null ? String(row[9]).trim() : '';
       if (rawImg) {
         imageUrl = normalizeImageUrl(rawImg);
-      } else if (row[0] && (String(row[0]).startsWith('http') || String(row[0]).startsWith('data:image'))) {
-        imageUrl = normalizeImageUrl(String(row[0]).trim());
-      } else if (row[11] && (String(row[11]).startsWith('http') || String(row[11]).startsWith('data:image'))) {
-        imageUrl = normalizeImageUrl(String(row[11]).trim());
       }
 
       const rateToUse = defaultRate || 4050;
